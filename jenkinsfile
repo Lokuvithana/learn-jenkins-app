@@ -76,6 +76,11 @@ pipeline {
         }
 
         stage('Deploy Staging') {
+            steps {
+                    input message: 'Do you wish to deploy to production?', ok: 'Yes, I\'m sure'
+            }
+        }
+        stage('Approval') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -93,7 +98,6 @@ pipeline {
                 '''
             }
         }
-
         stage('Deploy Prod') {
             agent {
                 docker {
